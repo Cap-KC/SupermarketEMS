@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane prefHeight="700.0" prefWidth="1100.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.supermarketems.controller.AdminDashboardController">
+
+    <!-- LEFT SIDEBAR NAVIGATION -->
+    <left>
+        <VBox prefWidth="240.0" spacing="10.0" style="-fx-background-color: #2c3e50;" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="20.0" left="15.0" right="15.0" top="20.0" />
+            </padding>
+            <children>
+                <Label text="Supermarket EMS" textFill="WHITE">
+                    <font>
+                        <Font name="System Bold" size="20.0" />
+                    </font>
+                    <VBox.margin>
+                        <Insets bottom="20.0" left="5.0" />
+                    </VBox.margin>
+                </Label>
+
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleNavDashboard" alignment="BASELINE_LEFT" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-height: 40; -fx-cursor: hand;" text="📊  Overview Dashboard" />
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleNavEmployees" alignment="BASELINE_LEFT" style="-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-pref-height: 40; -fx-cursor: hand;" text="👥  Employee Directory" />
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleNavSchedules" alignment="BASELINE_LEFT" style="-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-pref-height: 40; -fx-cursor: hand;" text="📅  Shift Schedules" />
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleNavLeave" alignment="BASELINE_LEFT" style="-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-pref-height: 40; -fx-cursor: hand;" text="📝  Leave Requests" />
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleNavPayroll" alignment="BASELINE_LEFT" style="-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-pref-height: 40; -fx-cursor: hand;" text="💳  Payroll Processing" />
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleNavAudit" alignment="BASELINE_LEFT" style="-fx-background-color: transparent; -fx-text-fill: #ecf0f1; -fx-pref-height: 40; -fx-cursor: hand;" text="🛡️  Audit Logs" />
+
+                <Region VBox.vgrow="ALWAYS" />
+
+                <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleLogout" alignment="BASELINE_LEFT" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-height: 40; -fx-cursor: hand;" text="🚪  Log Out" />
+            </children>
+        </VBox>
+    </left>
+
+    <!-- MAIN CENTER CONTENT AREA -->
+    <center>
+        <VBox spacing="20.0" style="-fx-background-color: #f4f6f7;" BorderPane.alignment="CENTER">
+            <padding>
+                <Insets bottom="20.0" left="25.0" right="25.0" top="20.0" />
+            </padding>
+            <children>
+
+                <!-- HEADER BAR -->
+                <HBox alignment="CENTER_LEFT">
+                    <children>
+                        <Label fx:id="welcomeLabel" text="Welcome back, Admin 👋" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="24.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+
+                <!-- METRIC CARDS ROW -->
+                <HBox spacing="20.0">
+                    <children>
+                        <!-- Total Employees Card -->
+                        <VBox prefWidth="250.0" spacing="8.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 0);" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Total Employees" textFill="#7f8c8d">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="totalEmployeesLabel" text="0" textFill="#2c3e50">
+                                    <font>
+                                        <Font name="System Bold" size="28.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
+
+                        <!-- Active Shifts Card -->
+                        <VBox prefWidth="250.0" spacing="8.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 0);" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Active Shifts Now" textFill="#7f8c8d">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="activeShiftLabel" text="0" textFill="#27ae60">
+                                    <font>
+                                        <Font name="System Bold" size="28.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
+
+                        <!-- Pending Leaves Card -->
+                        <VBox prefWidth="250.0" spacing="8.0" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 0);" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Label text="Pending Leave Requests" textFill="#7f8c8d">
+                                    <font>
+                                        <Font size="13.0" />
+                                    </font>
+                                </Label>
+                                <Label fx:id="pendingLeavesLabel" text="0" textFill="#e67e22">
+                                    <font>
+                                        <Font name="System Bold" size="28.0" />
+                                    </font>
+                                </Label>
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <!-- RECENT TIME LOGS TABLE AREA -->
+                <VBox spacing="10.0" VBox.vgrow="ALWAYS">
+                    <children>
+                        <Label text="Recent Time Logs &amp; Activity" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="16.0" />
+                            </font>
+                        </Label>
+
+                        <TableView fx:id="timeLogTable" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn fx:id="colLogId" prefWidth="100.0" text="Log ID" />
+                                <TableColumn fx:id="colEmployeeId" prefWidth="140.0" text="Employee ID" />
+                                <TableColumn fx:id="colClockIn" prefWidth="180.0" text="Clock In Time" />
+                                <TableColumn fx:id="colClockOut" prefWidth="180.0" text="Clock Out Time" />
+                                <TableColumn fx:id="colOvertime" prefWidth="150.0" text="Overtime (hrs)" />
+                            </columns>
+                        </TableView>
+                    </children>
+                </VBox>
+
+            </children>
+        </VBox>
+    </center>
+</BorderPane>

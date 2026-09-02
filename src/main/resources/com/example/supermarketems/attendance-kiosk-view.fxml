@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.example.supermarketems.controller.AttendanceKioskController"
+            style="-fx-background-color: #0f172a; -fx-padding: 30;"
+            onKeyPressed="#handleGlobalKeyPress">
+
+    <!-- Top Navigation Header -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20" style="-fx-padding: 0 0 20 0;">
+            <VBox spacing="5" HBox.hgrow="ALWAYS">
+                <Label text="SUPERMARKET EMS" style="-fx-text-fill: #38bdf8; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+                <Label text="Attendance Terminal Mode" style="-fx-text-fill: #94a3b8; -fx-font-size: 14px;"/>
+            </VBox>
+            <VBox alignment="CENTER_RIGHT" spacing="5">
+                <Label fx:id="lblClock" text="00:00:00 AM" style="-fx-text-fill: #f8fafc; -fx-font-size: 28px; -fx-font-weight: bold;"/>
+                <Label fx:id="lblDate" text="Monday, 1 Jan 2026" style="-fx-text-fill: #94a3b8; -fx-font-size: 14px;"/>
+            </VBox>
+            <Button text="Exit Kiosk" onAction="#handleExitKiosk"
+                    style="-fx-background-color: #334155; -fx-text-fill: #94a3b8; -fx-font-size: 12px; -fx-padding: 8 16; -fx-cursor: hand; -fx-background-radius: 6;"/>
+        </HBox>
+    </top>
+
+    <!-- Main Active Scanning Body -->
+    <center>
+        <VBox alignment="CENTER" spacing="20" style="-fx-padding: 10;">
+            <!-- Hidden Scanner Focus Target (Receives continuous inputs from USB HID hardware) -->
+            <TextField fx:id="txtScannerInput" opacity="0.0" prefWidth="0" prefHeight="0" onAction="#handleScannerSubmit"/>
+
+            <!-- Real-Time Scan Feedback Banner (Auto-resets after 3 seconds) -->
+            <VBox fx:id="cardFeedback" alignment="CENTER" spacing="10" visible="false" managed="false"
+                  style="-fx-background-color: #1e293b; -fx-border-color: #22c55e; -fx-border-width: 2; -fx-border-radius: 12; -fx-background-radius: 12; -fx-padding: 20 40; -fx-min-width: 500;">
+                <Label fx:id="lblFeedbackStatus" text="CLOCKED IN SUCCESSFULLY" style="-fx-text-fill: #22c55e; -fx-font-size: 20px; -fx-font-weight: bold;"/>
+                <Label fx:id="lblFeedbackName" text="Jane Doe" style="-fx-text-fill: #ffffff; -fx-font-size: 24px; -fx-font-weight: bold;"/>
+                <Label fx:id="lblFeedbackDetails" text="Time: 08:00 AM | Method: NFC" style="-fx-text-fill: #cbd5e1; -fx-font-size: 14px;"/>
+            </VBox>
+
+            <!-- Interactive Terminal Card -->
+            <VBox alignment="CENTER" spacing="15"
+                  style="-fx-background-color: #1e293b; -fx-background-radius: 16; -fx-padding: 25 35; -fx-min-width: 520; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 10, 0, 0, 0);">
+
+                <Label text="SCAN BADGE OR QR CODE" style="-fx-text-fill: #f8fafc; -fx-font-size: 22px; -fx-font-weight: bold;"/>
+                <Label text="Tap your NFC Card or present your QR Code to the camera scanner" style="-fx-text-fill: #94a3b8; -fx-font-size: 14px;"/>
+
+                <!-- Live Webcam Viewfinder -->
+                <VBox alignment="CENTER" spacing="8" style="-fx-padding: 5 0;">
+                    <ImageView fx:id="imgWebcamPreview" fitWidth="300" fitHeight="200" preserveRatio="true"
+                               style="-fx-border-color: #0284c7; -fx-border-width: 2; -fx-border-radius: 8;"/>
+                    <Label fx:id="lblScannerStatus" text="Point QR Code at camera..."
+                           style="-fx-text-fill: #38bdf8; -fx-font-size: 13px; -fx-font-weight: bold;"/>
+                </VBox>
+
+                <!-- Method Indicators / Selection Buttons -->
+                <HBox alignment="CENTER" spacing="15" style="-fx-padding: 5 0;">
+                    <Button fx:id="btnNfcMode" text="NFC TAP READY" onAction="#handleSelectNfcMode"
+                            style="-fx-background-color: #0284c7; -fx-text-fill: white; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand;"/>
+                    <Button fx:id="btnQrMode" text="QR SCANNER READY" onAction="#handleSelectQrMode"
+                            style="-fx-background-color: #334155; -fx-text-fill: #94a3b8; -fx-font-weight: bold; -fx-padding: 10 20; -fx-background-radius: 8; -fx-cursor: hand;"/>
+                </HBox>
+
+                <!-- Manual PIN / Employee ID Backup Entry -->
+                <VBox alignment="CENTER" spacing="8" style="-fx-padding: 10 0 0 0;">
+                    <Label text="Or enter Employee ID manually:" style="-fx-text-fill: #cbd5e1; -fx-font-size: 13px;"/>
+                    <HBox alignment="CENTER" spacing="10">
+                        <TextField fx:id="txtManualId" promptText="e.g. EMP001" prefWidth="240"
+                                   style="-fx-background-color: #0f172a; -fx-text-fill: white; -fx-prompt-text-fill: #64748b; -fx-font-size: 16px; -fx-padding: 10; -fx-border-color: #334155; -fx-border-radius: 6; -fx-background-radius: 6;"/>
+                        <Button text="Submit" onAction="#handleManualSubmit"
+                                style="-fx-background-color: #16a34a; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14px; -fx-padding: 10 20; -fx-cursor: hand; -fx-background-radius: 6;"/>
+                    </HBox>
+                </VBox>
+            </VBox>
+        </VBox>
+    </center>
+
+    <!-- Bottom Terminal Status Bar -->
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-padding: 10 0 0 0;">
+            <Label text="● Kiosk Status: Active &amp; Camera Online" style="-fx-text-fill: #22c55e; -fx-font-size: 13px;"/>
+        </HBox>
+    </bottom>
+</BorderPane>

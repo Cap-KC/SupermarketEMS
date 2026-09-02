@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.supermarketems.controller.LeaveRequestController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <children>
+        <!-- LEFT FORM PANEL -->
+        <VBox prefWidth="350.0" spacing="12.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <children>
+                <!-- BACK BUTTON & HEADER BAR -->
+                <HBox alignment="CENTER_LEFT" spacing="12.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#handleBackToDashboard" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-background-radius: 6;" text="← Dashboard" />
+                        <Label text="Leave Requests" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+
+                <VBox spacing="4.0">
+                    <children>
+                        <Label text="Request ID *" textFill="#555555" />
+                        <TextField fx:id="requestIdField" promptText="e.g. LR-1001" style="-fx-pref-height: 35;" />
+                    </children>
+                </VBox>
+
+                <VBox spacing="4.0">
+                    <children>
+                        <Label text="Employee *" textFill="#555555" />
+                        <ComboBox fx:id="employeeComboBox" prefWidth="310.0" promptText="Select Employee" style="-fx-pref-height: 35;" />
+                    </children>
+                </VBox>
+
+                <VBox spacing="4.0">
+                    <children>
+                        <Label text="Leave Type *" textFill="#555555" />
+                        <ComboBox fx:id="leaveTypeComboBox" prefWidth="310.0" promptText="Select Type" style="-fx-pref-height: 35;" />
+                    </children>
+                </VBox>
+
+                <HBox spacing="10.0">
+                    <children>
+                        <VBox prefWidth="145.0" spacing="4.0">
+                            <children>
+                                <Label text="Start Date *" textFill="#555555" />
+                                <DatePicker fx:id="startDatePicker" style="-fx-pref-height: 35;" />
+                            </children>
+                        </VBox>
+                        <VBox prefWidth="145.0" spacing="4.0">
+                            <children>
+                                <Label text="End Date *" textFill="#555555" />
+                                <DatePicker fx:id="endDatePicker" style="-fx-pref-height: 35;" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <VBox spacing="4.0">
+                    <children>
+                        <Label text="Reason" textFill="#555555" />
+                        <TextArea fx:id="reasonArea" prefHeight="80.0" promptText="Provide reason for leave..." wrapText="true" />
+                    </children>
+                </VBox>
+
+                <HBox spacing="10.0" style="-fx-padding: 10 0 0 0;">
+                    <children>
+                        <Button fx:id="submitButton" mnemonicParsing="false" onAction="#handleSubmit" prefWidth="145.0" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-height: 38; -fx-cursor: hand;" text="Submit Request" />
+                        <Button fx:id="clearButton" mnemonicParsing="false" onAction="#handleClear" prefWidth="145.0" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-height: 38; -fx-cursor: hand;" text="Clear Form" />
+                    </children>
+                </HBox>
+            </children>
+        </VBox>
+
+        <!-- RIGHT TABLE & CONTROLS PANEL -->
+        <VBox spacing="15.0" HBox.hgrow="ALWAYS">
+            <children>
+                <!-- TOP FILTER BAR -->
+                <HBox alignment="CENTER_LEFT" spacing="12.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 8; -fx-padding: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+                    <children>
+                        <TextField fx:id="searchField" prefWidth="250.0" promptText="Search by ID or Employee..." style="-fx-pref-height: 35;" />
+                        <ComboBox fx:id="statusFilterComboBox" prefWidth="150.0" promptText="Filter Status" style="-fx-pref-height: 35;" />
+                        <Button mnemonicParsing="false" onAction="#handleRefresh" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-pref-height: 35; -fx-cursor: hand;" text="Refresh" />
+                        <HBox alignment="CENTER_RIGHT" spacing="8.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#handleApprove" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-height: 35; -fx-cursor: hand;" text="Approve" />
+                                <Button mnemonicParsing="false" onAction="#handleReject" style="-fx-background-color: #e67e22; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-height: 35; -fx-cursor: hand;" text="Reject" />
+                                <Button mnemonicParsing="false" onAction="#handleDelete" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-height: 35; -fx-cursor: hand;" text="Delete" />
+                            </children>
+                        </HBox>
+                    </children>
+                </HBox>
+
+                <!-- TABLE VIEW -->
+                <TableView fx:id="leaveTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colReqId" prefWidth="90.0" text="Request ID" />
+                        <TableColumn fx:id="colEmpId" prefWidth="90.0" text="Employee ID" />
+                        <TableColumn fx:id="colEmpName" prefWidth="130.0" text="Employee Name" />
+                        <TableColumn fx:id="colType" prefWidth="90.0" text="Leave Type" />
+                        <TableColumn fx:id="colStartDate" prefWidth="95.0" text="Start Date" />
+                        <TableColumn fx:id="colEndDate" prefWidth="95.0" text="End Date" />
+                        <TableColumn fx:id="colReason" prefWidth="140.0" text="Reason" />
+                        <TableColumn fx:id="colStatus" prefWidth="85.0" text="Status" />
+                        <TableColumn fx:id="colApprover" prefWidth="110.0" text="Approved By" />
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+    </children>
+</HBox>

@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<HBox spacing="20.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.supermarketems.controller.PayrollController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <children>
+        <!-- LEFT FORM PANEL: GENERATE & CALCULATE PAYROLL -->
+        <VBox prefWidth="350.0" spacing="12.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 8; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+            <padding>
+                <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+            </padding>
+            <children>
+                <!-- BACK BUTTON & HEADER BAR -->
+                <HBox alignment="CENTER_LEFT" spacing="12.0">
+                    <children>
+                        <Button mnemonicParsing="false" onAction="#handleBackToDashboard" style="-fx-background-color: #34495e; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand; -fx-background-radius: 6;" text="← Dashboard" />
+                        <Label text="Payroll Processing" textFill="#2c3e50">
+                            <font>
+                                <Font name="System Bold" size="18.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </HBox>
+
+                <VBox spacing="4.0">
+                    <children>
+                        <Label text="Payroll ID *" textFill="#555555" />
+                        <TextField fx:id="payrollIdField" promptText="e.g. PAY-2026-001" style="-fx-pref-height: 35;" />
+                    </children>
+                </VBox>
+
+                <VBox spacing="4.0">
+                    <children>
+                        <Label text="Employee *" textFill="#555555" />
+                        <ComboBox fx:id="employeeComboBox" prefWidth="310.0" promptText="Select Employee" style="-fx-pref-height: 35;" />
+                    </children>
+                </VBox>
+
+                <VBox spacing="4.0">
+                    <children>
+                        <Label text="Pay Period / Month *" textFill="#555555" />
+                        <ComboBox fx:id="payPeriodComboBox" prefWidth="310.0" promptText="Select Pay Period" style="-fx-pref-height: 35;" />
+                    </children>
+                </VBox>
+
+                <HBox spacing="10.0">
+                    <children>
+                        <VBox prefWidth="145.0" spacing="4.0">
+                            <children>
+                                <Label text="Basic Salary ($) *" textFill="#555555" />
+                                <TextField fx:id="basicSalaryField" promptText="0.00" style="-fx-pref-height: 35;" />
+                            </children>
+                        </VBox>
+                        <VBox prefWidth="145.0" spacing="4.0">
+                            <children>
+                                <Label text="OT Hours" textFill="#555555" />
+                                <TextField fx:id="overtimeHoursField" promptText="0.0" style="-fx-pref-height: 35;" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <HBox spacing="10.0">
+                    <children>
+                        <VBox prefWidth="145.0" spacing="4.0">
+                            <children>
+                                <Label text="Allowances ($)" textFill="#555555" />
+                                <TextField fx:id="allowancesField" promptText="0.00" style="-fx-pref-height: 35;" />
+                            </children>
+                        </VBox>
+                        <VBox prefWidth="145.0" spacing="4.0">
+                            <children>
+                                <Label text="Deductions ($)" textFill="#555555" />
+                                <TextField fx:id="deductionsField" promptText="0.00" style="-fx-pref-height: 35;" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <VBox spacing="4.0" style="-fx-background-color: #f8f9fa; -fx-padding: 10; -fx-background-radius: 6;">
+                    <children>
+                        <Label text="Calculated Net Pay" textFill="#7f8c8d">
+                            <font>
+                                <Font size="12.0" />
+                            </font>
+                        </Label>
+                        <Label fx:id="netPayLabel" text="\$0.00" textFill="#27ae60">
+                            <font>
+                                <Font name="System Bold" size="22.0" />
+                            </font>
+                        </Label>
+                    </children>
+                </VBox>
+
+                <HBox spacing="10.0" style="-fx-padding: 5 0 0 0;">
+                    <children>
+                        <Button fx:id="calculateButton" mnemonicParsing="false" onAction="#handleCalculate" prefWidth="145.0" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-height: 38; -fx-cursor: hand;" text="Calculate" />
+                        <Button fx:id="processButton" mnemonicParsing="false" onAction="#handleProcessPayroll" prefWidth="145.0" style="-fx-background-color: #27ae60; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-height: 38; -fx-cursor: hand;" text="Process and Save" />
+                    </children>
+                </HBox>
+
+                <!-- FIXED: Changed MAX_VALUE to Infinity -->
+                <Button fx:id="clearButton" maxWidth="Infinity" mnemonicParsing="false" onAction="#handleClear" style="-fx-background-color: #95a5a6; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-height: 35; -fx-cursor: hand;" text="Clear Form" />
+            </children>
+        </VBox>
+
+        <!-- RIGHT TABLE & CONTROLS PANEL -->
+        <VBox spacing="15.0" HBox.hgrow="ALWAYS">
+            <children>
+                <!-- TOP FILTER & ACTION BAR -->
+                <HBox alignment="CENTER_LEFT" spacing="12.0" style="-fx-background-color: #FFFFFF; -fx-background-radius: 8; -fx-padding: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 0);">
+                    <children>
+                        <TextField fx:id="searchField" prefWidth="250.0" promptText="Search by Payroll ID or Employee..." style="-fx-pref-height: 35;" />
+                        <ComboBox fx:id="statusFilterComboBox" prefWidth="140.0" promptText="Status" style="-fx-pref-height: 35;" />
+                        <Button mnemonicParsing="false" onAction="#handleRefresh" style="-fx-background-color: #3498db; -fx-text-fill: white; -fx-pref-height: 35; -fx-cursor: hand;" text="Refresh" />
+                        <HBox alignment="CENTER_RIGHT" spacing="8.0" HBox.hgrow="ALWAYS">
+                            <children>
+                                <Button mnemonicParsing="false" onAction="#handleMarkPaid" style="-fx-background-color: #2ecc71; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-height: 35; -fx-cursor: hand;" text="Mark Paid" />
+                                <Button mnemonicParsing="false" onAction="#handleGeneratePayslip" style="-fx-background-color: #8e44ad; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-height: 35; -fx-cursor: hand;" text="Export Payslip" />
+                                <Button mnemonicParsing="false" onAction="#handleDelete" style="-fx-background-color: #e74c3c; -fx-text-fill: white; -fx-font-weight: bold; -fx-pref-height: 35; -fx-cursor: hand;" text="Delete" />
+                            </children>
+                        </HBox>
+                    </children>
+                </HBox>
+
+                <!-- PAYROLL RECORDS TABLE -->
+                <TableView fx:id="payrollTable" VBox.vgrow="ALWAYS">
+                    <columns>
+                        <TableColumn fx:id="colPayrollId" prefWidth="95.0" text="Payroll ID" />
+                        <TableColumn fx:id="colEmpId" prefWidth="90.0" text="Emp ID" />
+                        <TableColumn fx:id="colEmpName" prefWidth="130.0" text="Employee Name" />
+                        <TableColumn fx:id="colPayPeriod" prefWidth="100.0" text="Pay Period" />
+                        <TableColumn fx:id="colBasic" prefWidth="90.0" text="Basic ($)" />
+                        <TableColumn fx:id="colAllowances" prefWidth="85.0" text="Allow. ($)" />
+                        <TableColumn fx:id="colDeductions" prefWidth="85.0" text="Deduct. ($)" />
+                        <TableColumn fx:id="colNetPay" prefWidth="100.0" text="Net Pay ($)" />
+                        <TableColumn fx:id="colStatus" prefWidth="85.0" text="Status" />
+                    </columns>
+                </TableView>
+            </children>
+        </VBox>
+    </children>
+</HBox>
